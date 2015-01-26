@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Autofac;
 using CelticEgyptianRatscrewKata.SnapValidation;
 using NUnit.Framework;
 
@@ -14,7 +16,8 @@ namespace CelticEgyptianRatscrewKata.Tests
             containerBuilder.RegisterModule<SnapValidationModule>();
             using (var container = containerBuilder.Build())
             {
-                var aggregateSnapValidator = container.Resolve<AggregateSnapValidator>();
+                var listOfValidators = container.Resolve<IEnumerable<ISnapValidator>>();
+                Assert.AreEqual(3, listOfValidators.Select(x => x.GetType()).Distinct().ToList().Count);
             }
         }
     }
