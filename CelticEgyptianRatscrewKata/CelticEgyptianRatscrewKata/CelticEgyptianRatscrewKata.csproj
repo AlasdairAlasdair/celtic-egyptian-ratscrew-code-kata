@@ -45,9 +45,15 @@
     <Compile Include="Card.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rank.cs" />
+    <Compile Include="SnapValidation\DarkQueenSnapValidator.cs" />
+    <Compile Include="SnapValidation\ISnapValidator.cs" />
+    <Compile Include="SnapValidation\SandwichSnapValidator.cs" />
+    <Compile Include="SnapValidation\StandardSnapValidator.cs" />
     <Compile Include="Stack.cs" />
     <Compile Include="Tests\StackTests.cs" />
     <Compile Include="Suit.cs" />
+    <Compile Include="Tests\SandwichSnapValidatorTests.cs" />
+    <Compile Include="Tests\StandardSnapValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
