@@ -49,6 +49,7 @@
     <Compile Include="Cards.cs" />
     <Compile Include="Dealer.cs" />
     <Compile Include="DeckConstants.cs" />
+    <Compile Include="DeckGenerator.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameBuilder.cs" />
     <Compile Include="IRandomNumberGenerator.cs" />
@@ -65,6 +66,8 @@
     <Compile Include="Tests\DarkQueenSnapRuleTests.cs" />
     <Compile Include="SnapRules\SandwichSnapRule.cs" />
     <Compile Include="Tests\DealerTests.cs" />
+    <Compile Include="Tests\DeckGeneratorTests.cs" />
+    <Compile Include="Tests\FullGameTests.cs" />
     <Compile Include="Tests\GameBuilderTests.cs" />
     <Compile Include="Tests\GameTests.cs" />
     <Compile Include="Tests\SandwichSnapRuleTests.cs" />
