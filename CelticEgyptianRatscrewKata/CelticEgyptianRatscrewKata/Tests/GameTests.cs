@@ -30,7 +30,7 @@ namespace CelticEgyptianRatscrewKata.Tests
         }
 
         [Test]
-        public void PlayersAssignedCardsAfterGameBegun()
+        public void PlayerIsAssignedCardsByGame()
         {
             var stack = new Cards(new List<Card>
             {
@@ -43,7 +43,21 @@ namespace CelticEgyptianRatscrewKata.Tests
             game.Begin();
 
             Assert.That(m_PlayerA.HandCount, Is.GreaterThan(0));
-            Assert.That(m_PlayerB.HandCount, Is.GreaterThan(0));
+        }
+
+        [Test]
+        public void PlayersAreAssignedCardsFairlyByGame()
+        {
+            var stack = new Cards(new List<Card>
+            {
+                new Card(Suit.Clubs, Rank.Ace),
+                new Card(Suit.Clubs, Rank.Two),
+            });
+
+            var game = new Game(m_TwoPlayers, stack);
+            game.Begin();
+
+            Assert.That(m_PlayerA.HandCount, Is.EqualTo(m_PlayerB.HandCount));
         }
     }
 }
