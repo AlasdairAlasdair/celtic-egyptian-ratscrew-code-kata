@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Moq;
 using NUnit.Framework;
 
 namespace CelticEgyptianRatscrewKata.Tests
@@ -53,6 +55,43 @@ namespace CelticEgyptianRatscrewKata.Tests
             game.Begin();
 
             Assert.That(m_PlayerA.HandCount, Is.EqualTo(m_PlayerB.HandCount));
+        }
+
+        [Test]
+        public void ShufflerIsCalled()
+        {
+            var inputStack = new Cards(new List<Card>
+            {
+                new Card(Suit.Clubs, Rank.Ace),
+                new Card(Suit.Clubs, Rank.Two),
+            });
+
+            var mockShuffler = new Mock<IShuffler>();
+            mockShuffler.Setup(x => x.Shuffle(inputStack)).Returns(inputStack);
+
+            var game = new Game(m_TwoPlayers, inputStack, mockShuffler.Object);
+            game.Begin();
+
+            mockShuffler.Verify(x => x.Shuffle(inputStack), Times.Once());
+        }
+
+        [Test]
+        public void ShufflerIsUsedToAssignCards()
+        {
+            var inputStack = new Cards(new List<Card>
+            {
+                new Card(Suit.Clubs, Rank.Ace),
+                new Card(Suit.Clubs, Rank.Two),
+            });
+
+            var mockShuffler = new Mock<IShuffler>();
+            mockShuffler.Setup(x => x.Shuffle(inputStack)).Returns(new Cards(Enumerable.Empty<Card>()));
+
+            var game = new Game(m_TwoPlayers, inputStack, mockShuffler.Object);
+            game.Begin();
+
+            Assert.That(m_PlayerA.HandCount, Is.EqualTo(0));
+            Assert.That(m_PlayerB.HandCount, Is.EqualTo(0));
         }
     }
 }
