@@ -108,5 +108,26 @@ namespace CelticEgyptianRatscrewKata.Tests
 
             Assert.That(m_PlayerA.HandCount, Is.EqualTo(startingHandCount - cardsPlayedPerTurn));
         }
+
+        [Test]
+        public void PlayerHandCountDoesNotChangeIfEmptyHand()
+        {
+            var inputStack = new Cards(new List<Card>
+            {
+                new Card(Suit.Clubs, Rank.Ace),
+                new Card(Suit.Clubs, Rank.Two),
+            });
+
+            var game = new Game(m_TwoPlayers, inputStack, new Shuffler());
+            game.Prepare();
+
+            Assert.That(m_PlayerA.HandCount, Is.EqualTo(1));
+
+            game.TakeTurn(m_PlayerA);
+            Assert.That(m_PlayerA.HandCount, Is.EqualTo(0));
+
+            game.TakeTurn(m_PlayerA);
+            Assert.That(m_PlayerA.HandCount, Is.EqualTo(0));
+        }
     }
 }
