@@ -29,5 +29,11 @@ namespace CelticEgyptianRatscrewKata
                 m_Players[i].GivePlayerCards(dealtHands[i]);
             }
         }
+
+        public void TakeTurn(Player player)
+        {
+            var playerTopCard = player.PopCard();
+            m_GameDeck.AddToTop(playerTopCard);
+        }
     }
 }

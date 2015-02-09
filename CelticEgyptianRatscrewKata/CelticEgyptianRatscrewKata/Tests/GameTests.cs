@@ -93,5 +93,20 @@ namespace CelticEgyptianRatscrewKata.Tests
             Assert.That(m_PlayerA.HandCount, Is.EqualTo(0));
             Assert.That(m_PlayerB.HandCount, Is.EqualTo(0));
         }
+
+        [Test]
+        public void PlayerLaysOneCardPerTurn()
+        {
+            const int cardsPlayedPerTurn = 1;
+            
+            var game = new Game(m_TwoPlayers, DeckGenerator.GetStandardDeck(), new Shuffler());
+            game.Prepare();
+            
+            var startingHandCount = m_PlayerA.HandCount;
+
+            game.TakeTurn(m_PlayerA);
+
+            Assert.That(m_PlayerA.HandCount, Is.EqualTo(startingHandCount - cardsPlayedPerTurn));
+        }
     }
 }

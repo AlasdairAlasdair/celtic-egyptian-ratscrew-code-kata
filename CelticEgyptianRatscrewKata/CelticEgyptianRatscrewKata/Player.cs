@@ -15,5 +15,10 @@ namespace CelticEgyptianRatscrewKata
         {
             m_Hand = cards;
         }
+
+        public Card PopCard()
+        {
+            return m_Hand.Pop();
+        }
     }
 }
