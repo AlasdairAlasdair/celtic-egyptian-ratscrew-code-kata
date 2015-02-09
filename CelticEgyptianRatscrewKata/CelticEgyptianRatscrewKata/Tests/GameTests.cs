@@ -37,7 +37,7 @@ namespace CelticEgyptianRatscrewKata.Tests
             });
 
             var game = new Game(m_TwoPlayers, stack, new Shuffler());
-            game.Begin();
+            game.Prepare();
 
             Assert.That(m_PlayerA.HandCount, Is.GreaterThan(0));
         }
@@ -52,7 +52,7 @@ namespace CelticEgyptianRatscrewKata.Tests
             });
 
             var game = new Game(m_TwoPlayers, stack, new Shuffler());
-            game.Begin();
+            game.Prepare();
 
             Assert.That(m_PlayerA.HandCount, Is.EqualTo(m_PlayerB.HandCount));
         }
@@ -70,7 +70,7 @@ namespace CelticEgyptianRatscrewKata.Tests
             mockShuffler.Setup(x => x.Shuffle(inputStack)).Returns(inputStack);
 
             var game = new Game(m_TwoPlayers, inputStack, mockShuffler.Object);
-            game.Begin();
+            game.Prepare();
 
             mockShuffler.Verify(x => x.Shuffle(inputStack), Times.Once());
         }
@@ -88,7 +88,7 @@ namespace CelticEgyptianRatscrewKata.Tests
             mockShuffler.Setup(x => x.Shuffle(inputStack)).Returns(new Cards(Enumerable.Empty<Card>()));
 
             var game = new Game(m_TwoPlayers, inputStack, mockShuffler.Object);
-            game.Begin();
+            game.Prepare();
 
             Assert.That(m_PlayerA.HandCount, Is.EqualTo(0));
             Assert.That(m_PlayerB.HandCount, Is.EqualTo(0));

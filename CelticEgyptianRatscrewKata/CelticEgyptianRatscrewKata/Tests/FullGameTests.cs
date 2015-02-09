@@ -21,7 +21,7 @@ namespace CelticEgyptianRatscrewKata.Tests
             gameBuilder.SetShuffler(new Shuffler());
 
             var build = gameBuilder.Build();
-            build.Begin();
+            build.Prepare();
 
             Assert.That(playerA.HandCount, Is.EqualTo(26));
             Assert.That(playerB.HandCount, Is.EqualTo(26));

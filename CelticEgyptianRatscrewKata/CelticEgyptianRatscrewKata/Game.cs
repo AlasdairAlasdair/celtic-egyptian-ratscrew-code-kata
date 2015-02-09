@@ -5,23 +5,24 @@ namespace CelticEgyptianRatscrewKata
 {
     internal class Game
     {
-        private readonly Cards m_Deck;
+        private readonly Cards m_InitialDeck;
         private readonly IShuffler m_Shuffler;
         private readonly List<Player> m_Players;
+        private Cards m_GameDeck;
 
-        public Game(IEnumerable<Player> players, Cards deck, IShuffler shuffler)
+        public Game(IEnumerable<Player> players, Cards initialDeck, IShuffler shuffler)
         {
-            m_Deck = deck;
+            m_InitialDeck = initialDeck;
             m_Shuffler = shuffler;
             m_Players = players.ToList();
         }
 
-        public void Begin()
+        public void Prepare()
         {
-            var shufflerDeck = m_Shuffler.Shuffle(m_Deck);
+            m_GameDeck = m_Shuffler.Shuffle(m_InitialDeck);
 
             var dealer = new Dealer();
-            var dealtHands = dealer.Deal(m_Players.Count, shufflerDeck);
+            var dealtHands = dealer.Deal(m_Players.Count, m_GameDeck);
 
             for (int i = 0; i < m_Players.Count; i++)
             {
