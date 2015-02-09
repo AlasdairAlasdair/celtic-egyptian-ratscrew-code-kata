@@ -11,6 +11,7 @@ namespace CelticEgyptianRatscrewKata
         private readonly List<Player> m_Players = new List<Player>();
 
         private Cards m_Deck;
+        private IShuffler m_Shuffler;
 
         public void AddPlayer(Player player)
         {
@@ -27,11 +28,25 @@ namespace CelticEgyptianRatscrewKata
             m_Deck = new Cards(deck);
         }
 
+        public void SetShuffler(IShuffler shuffler)
+        {
+            if (m_Shuffler != null)
+            {
+                throw new InvalidOperationException("Shuffler has already been set.");
+            }
+            m_Shuffler = shuffler;
+        }
+
         public Game Build()
         {
             if (m_Deck == null)
             {
                 throw new InvalidOperationException("There's no deck set for this game.");
+            }
+
+            if (m_Shuffler == null)
+            {
+                throw new InvalidOperationException("There's no shuffler set for this game.");
             }
 
             if (m_Players.Count > m_Deck.Count())
@@ -44,7 +59,7 @@ namespace CelticEgyptianRatscrewKata
                 throw new InvalidOperationException(string.Format("There must be at least {0} players", c_MinNumberOfPlayers));
             }
 
-            return new Game(m_Players, m_Deck);
+            return new Game(m_Players, m_Deck, m_Shuffler);
         }
     }
 }

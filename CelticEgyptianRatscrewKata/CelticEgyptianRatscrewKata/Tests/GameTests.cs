@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace CelticEgyptianRatscrewKata.Tests
@@ -39,7 +34,7 @@ namespace CelticEgyptianRatscrewKata.Tests
                 new Card(Suit.Clubs, Rank.Three),
             });
 
-            var game = new Game(m_TwoPlayers, stack);
+            var game = new Game(m_TwoPlayers, stack, new Shuffler());
             game.Begin();
 
             Assert.That(m_PlayerA.HandCount, Is.GreaterThan(0));
@@ -54,7 +49,7 @@ namespace CelticEgyptianRatscrewKata.Tests
                 new Card(Suit.Clubs, Rank.Two),
             });
 
-            var game = new Game(m_TwoPlayers, stack);
+            var game = new Game(m_TwoPlayers, stack, new Shuffler());
             game.Begin();
 
             Assert.That(m_PlayerA.HandCount, Is.EqualTo(m_PlayerB.HandCount));

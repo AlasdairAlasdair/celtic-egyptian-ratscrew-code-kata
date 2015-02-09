@@ -8,13 +8,14 @@ namespace CelticEgyptianRatscrewKata.Tests
     [TestFixture]
     class GameBuilderTests
     {
-        public static List<Card> threeCardsList = new List<Card>
-                                {
-                                    new Card(Suit.Clubs, Rank.Ace),
-                                    new Card(Suit.Clubs, Rank.Two),
-                                    new Card(Suit.Clubs, Rank.Three),
-                                };
-        public static Cards threeCards = new Cards(threeCardsList);
+        public static List<Card> m_ThreeCardsList = new List<Card>
+        {
+            new Card(Suit.Clubs, Rank.Ace),
+            new Card(Suit.Clubs, Rank.Two),
+            new Card(Suit.Clubs, Rank.Three),
+        };
+
+        public static Cards m_ThreeCards = new Cards(m_ThreeCardsList);
 
         [Test]
         public void CanBuildValidGame()
@@ -23,9 +24,35 @@ namespace CelticEgyptianRatscrewKata.Tests
             gameBuilder.AddPlayer(new Player());
             gameBuilder.AddPlayer(new Player());
 
-            gameBuilder.SetDeck(new Cards(threeCards));
+            gameBuilder.SetDeck(new Cards(m_ThreeCards));
+
+            gameBuilder.SetShuffler(new Shuffler());
 
             Assert.DoesNotThrow(() => gameBuilder.Build());
+        }
+
+        [Test]
+        public void CannotBuildGameWithEmptyShuffler()
+        {
+            var gameBuilder = new GameBuilder();
+            gameBuilder.AddPlayer(new Player());
+            gameBuilder.AddPlayer(new Player());
+
+            gameBuilder.SetDeck(new Cards(m_ThreeCards));
+
+            Assert.Throws<InvalidOperationException>(() => gameBuilder.Build());
+        }
+
+        [Test]
+        public void CannotBuildGameWithNoDeckSet()
+        {
+            var gameBuilder = new GameBuilder();
+            gameBuilder.AddPlayer(new Player());
+            gameBuilder.AddPlayer(new Player());
+
+            gameBuilder.SetShuffler(new Shuffler());
+
+            Assert.Throws<InvalidOperationException>(() => gameBuilder.Build());
         }
 
         [Test]
@@ -37,6 +64,8 @@ namespace CelticEgyptianRatscrewKata.Tests
 
             gameBuilder.SetDeck(new Cards(Enumerable.Empty<Card>()));
 
+            gameBuilder.SetShuffler(new Shuffler());
+
             Assert.Throws<InvalidOperationException>(() => gameBuilder.Build());
         }
 
@@ -46,13 +75,17 @@ namespace CelticEgyptianRatscrewKata.Tests
             var gameBuilder = new GameBuilder();
             gameBuilder.AddPlayer(new Player());
 
+            gameBuilder.SetDeck(new Cards(m_ThreeCards));
+
+            gameBuilder.SetShuffler(new Shuffler());
+
             Assert.Throws<InvalidOperationException>(() => gameBuilder.Build());
         }
 
         [Test]
         public void ValidGameMustHaveAtLeastOneCardPerPlayer()
         {
-            int morePlayersThanCards = threeCards.Count() + 1;
+            int morePlayersThanCards = m_ThreeCards.Count() + 1;
 
             var gameBuilder = new GameBuilder();
             for (int i = 0; i < morePlayersThanCards; i++)
@@ -60,7 +93,9 @@ namespace CelticEgyptianRatscrewKata.Tests
                 gameBuilder.AddPlayer(new Player());
             }
 
-            gameBuilder.SetDeck(threeCards);
+            gameBuilder.SetDeck(m_ThreeCards);
+
+            gameBuilder.SetShuffler(new Shuffler());
 
             Assert.Throws<InvalidOperationException>(() => gameBuilder.Build());
         }
